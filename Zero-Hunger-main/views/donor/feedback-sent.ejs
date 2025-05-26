@@ -1,0 +1,36 @@
+<main>
+	<%- include('../partials/donorSidebar') %><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <header>
+    <h1>Sent Feedback</h1>
+    <a href="/donor/dashboard">Back to Dashboard</a>
+  </header>
+  <main>
+    <!-- Feedback Sent -->
+    <section id="feedback-sent">
+      <h2>My Sent Feedback</h2>
+      <% if (sentFeedbacks.length === 0) { %>
+        <p>You have not sent any feedback yet.</p>
+      <% } else { %>
+        <ul>
+          <% sentFeedbacks.forEach(feedback => { %>
+            <li>
+              <p><strong>To:</strong> <%= feedback.receiver.firstName %> <%= feedback.receiver.lastName %> (<%= feedback.receiver.role %>)</p>
+              <p><strong>Message:</strong> <%= feedback.message %></p>
+              <p><strong>Sent on:</strong> <%= feedback.createdAt.toDateString() %></p>
+            </li>
+          <% }); %>
+        </ul>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>
+</main>

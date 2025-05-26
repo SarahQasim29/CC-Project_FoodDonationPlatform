@@ -1,0 +1,31 @@
+<main>
+    <h3 class="text-center my-4">Available Donations</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Donor Name</th>
+                <th>Food Type</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% availableDonations.forEach((donation, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= donation.donor.firstName %> <%= donation.donor.lastName %></td>
+                    <td><%= donation.foodType %></td>
+                    <td><%= donation.quantity %></td>
+                    <td>
+                        <!-- Confirm Form -->
+                        <form action="/collector/confirm/<%= donation._id %>" method="POST">
+                            <input type="number" name="quantity" placeholder="Enter quantity" min="1" max="<%= donation.quantity %>" required>
+                            <button type="submit" class="btn btn-success btn-sm">Confirm</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</main>

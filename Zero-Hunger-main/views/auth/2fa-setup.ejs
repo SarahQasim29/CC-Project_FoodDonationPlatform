@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+<div class="container" style="max-width: 500px; margin: 50px auto; text-align: center;">
+  <h1><%= title || "Enable Two-Factor Authentication" %></h1>
+
+  <p>Scan this QR code with your Authenticator app:</p>
+  <img src="<%= qrDataUrl %>" alt="2FA QR Code" style="max-width: 200px; margin: 20px auto;" />
+
+  <p>Or enter this secret key manually: <strong><%= secret %></strong></p>
+
+  <form action="/2fa/enable" method="POST">
+    <!-- No userId hidden input needed here because user is logged in -->
+    <button type="submit" style="padding: 10px 20px; margin-top: 20px;">Enable 2FA</button>
+  </form>
+</div>

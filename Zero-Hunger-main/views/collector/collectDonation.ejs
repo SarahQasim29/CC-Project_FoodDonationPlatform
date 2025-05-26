@@ -1,0 +1,13 @@
+<main>
+    <%- include('../partials/collectorSidebar') %>
+<h1>Collect Donation</h1>
+<p><strong>Food Type:</strong> <%= donation.foodType %></p>
+<p><strong>Total Quantity:</strong> <%= donation.quantity %></p>
+<p><strong>Address:</strong> <%= donation.address %></p>
+
+<form action="/collector/donation/collect/<%= donation._id %>" method="POST">
+  <label for="quantity">Enter quantity to collect:</label>
+  <input type="number" id="quantity" name="quantity" required min="1" max="<%= donation.quantity %>">
+  <button type="submit">Collect</button>
+</form>
+</main>

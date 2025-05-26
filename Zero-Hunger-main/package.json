@@ -1,0 +1,42 @@
+{
+  "name": "food-donation-management-system",
+  "version": "1.0.0",
+  "description": "A Food donation management system in which donors can donate the food and this food can be fed to the poor people",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js -e html,css,js,ejs"
+  },
+  "keywords": [
+    "Food",
+    "Donation",
+    "management"
+  ],
+  "author": "aayush",
+  "license": "ISC",
+  "dependencies": {
+    "@react-google-maps/api": "^2.20.5",
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.21.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.2",
+    "haversine": "^1.1.1",
+    "http": "^0.0.1-security",
+    "leaflet": "^1.9.4",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.1.2",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "speakeasy": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

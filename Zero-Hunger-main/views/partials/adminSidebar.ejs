@@ -1,0 +1,22 @@
+<div id="sidebar">
+	<ul id="sidebar-nav">
+	  <!-- Display a welcome message with the admin's first name -->
+	  <li>
+		Welcome <%= currentUser ? currentUser.firstName : 'Guest' %>
+	  </li>
+  
+	  <!-- Sidebar Navigation Links -->
+	  <li><a href="/admin/dashboard">Dashboard</a></li>
+	  <li><a href="/admin/collected-donations">Collected Donations</a></li>
+	  <li><a href="/admin/donations/pending">Pending Donations</a></li>
+	  <li><a href="/admin/location">Agent Tracking</a></li>
+	  
+	  <!-- Feedback link for admin to view all feedbacks -->
+	  <li><a href="/admin/feedbacks">Feedback</a></li>
+  
+	  <li><a href="/admin/agents">Agents</a></li>
+	  <li><a href="/admin/profile">My Profile</a></li>
+	  <li><a href="/auth/logout" class="btn">Logout</a></li>
+	</ul>
+  </div>
+  

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <header>
+    <h1>Feedback</h1>
+    <a href="/collector/dashboard">Back to Dashboard</a>
+  </header>
+  <main>
+    <!-- Feedback Form -->
+    <section id="send-feedback">
+      <h2>Send Feedback to Admin</h2>
+      <form action="/collector/feedback" method="POST">
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <button type="submit">Send Feedback</button>
+      </form>
+    </section>
+
+    <hr>
+
+    <!-- Feedback Received -->
+    <section id="feedback-received">
+      <h2>Feedback from Admin</h2>
+      <% if (receivedFeedbacks.length === 0) { %>
+        <p>No feedback from admin yet.</p>
+      <% } else { %>
+        <ul>
+          <% receivedFeedbacks.forEach(feedback => { %>
+            <li>
+              <p><strong>From:</strong> Admin</p>
+              <p><strong>Date:</strong> <%= feedback.createdAt.toLocaleString() %></p>
+              <p><strong>Message:</strong> <%= feedback.message %></p>
+            </li>
+          <% }); %>
+        </ul>
+      <% } %>
+    </section>
+
+    <hr>
+
+    <!-- Feedback Sent -->
+    <section id="feedback-sent">
+      <h2>My Sent Feedback</h2>
+      <% if (sentFeedbacks.length === 0) { %>
+        <p>You have not sent any feedback yet.</p>
+      <% } else { %>
+        <ul>
+          <% sentFeedbacks.forEach(feedback => { %>
+            <li>
+              <p><strong>To:</strong> Admin</p>
+              <p><strong>Date:</strong> <%= feedback.createdAt.toLocaleString() %></p>
+              <p><strong>Message:</strong> <%= feedback.message %></p>
+            </li>
+          <% }); %>
+        </ul>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>

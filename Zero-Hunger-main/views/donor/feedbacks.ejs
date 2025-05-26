@@ -1,0 +1,86 @@
+<main>
+  <%- include('../partials/donorSidebar') %>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles/main.css">
+  </head>
+  <body>
+    <header>
+      <h1>Donor Feedback</h1>
+      <a href="/donor/dashboard">Back to Dashboard</a>
+    </header>
+    <main>
+      <!-- Send Feedback Form -->
+      <section id="send-feedback">
+        <h2>Send Feedback to Admin</h2>
+        <form action="/donor/feedback" method="POST">
+          <label for="message">Your Message:</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <button type="submit">Send Feedback</button>
+        </form>
+      </section>
+
+      <hr>
+
+      <!-- Feedback Received from Admin -->
+      <section id="feedback-received" style="max-height: 300px; overflow-y: scroll; padding-right: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
+        <h2>Feedback from Admin</h2>
+        <% if (receivedFeedbacks.length === 0) { %>
+          <p>No feedback messages received yet.</p>
+        <% } else { %>
+          <ul>
+            <% receivedFeedbacks.forEach(feedback => { %>
+              <li>
+                <p><strong>From:</strong> <%= feedback.sender.name %></p>
+                <p><strong>Date:</strong> <%= feedback.createdAt.toLocaleString() %></p>
+                <p><strong>Message:</strong> <%= feedback.message %></p>
+
+                <% if (feedback.reply) { %>
+                  <p><strong>Reply from Admin:</strong> <%= feedback.reply %></p>
+                  <p><strong>Reply Date:</strong> <%= feedback.repliedAt.toLocaleString() %></p>
+                <% } %>
+
+                <!-- Displaying replies if any -->
+                <% if (feedback.replies && feedback.replies.length > 0) { %>
+                  <ul>
+                    <% feedback.replies.forEach(reply => { %>
+                      <li>
+                        <p><strong>Reply from Admin:</strong> <%= reply.reply %></p>
+                        <p><strong>Reply Date:</strong> <%= reply.repliedAt.toLocaleString() %></p>
+                      </li>
+                    <% }); %>
+                  </ul>
+                <% } %>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
+      </section>
+
+      <hr>
+
+      <!-- Feedback Sent -->
+      <section id="feedback-sent" style="max-height: 300px; overflow-y: scroll; padding-right: 10px; border: 1px solid #ccc;">
+        <h2>My Sent Feedback</h2>
+        <% if (sentFeedbacks.length === 0) { %>
+          <p>You have not sent any feedback yet.</p>
+        <% } else { %>
+          <ul>
+            <% sentFeedbacks.forEach(feedback => { %>
+              <li>
+                <p><strong>To:</strong> <%= feedback.receiver.firstName %> <%= feedback.receiver.lastName %> (<%= feedback.receiver.role %>)</p>
+                <p><strong>Message:</strong> <%= feedback.message %></p>
+                <p><strong>Sent on:</strong> <%= feedback.createdAt.toDateString() %></p>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
+      </section>
+    </main>
+  </body>
+  </html>
+</main>

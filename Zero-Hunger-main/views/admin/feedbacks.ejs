@@ -1,0 +1,61 @@
+<main>
+  <%- include('../partials/adminSidebar') %>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+  </head>
+  <body>
+    <!-- HTML Template -->
+    <h1>Feedback Received</h1>
+
+    <% if (receivedFeedbacks.length === 0) { %>
+      <p>No feedback received yet.</p>
+    <% } else { %>
+      <div style="max-height: 400px; overflow-y: scroll; padding-right: 10px; border: 1px solid #ccc; margin-bottom: 20px; margin-top: 50px;">
+        <ul>
+          <% receivedFeedbacks.forEach(feedback => { %>
+            <li style="margin-bottom: 20px;">
+              <strong>From:</strong> <%= feedback.sender.firstName %> <%= feedback.sender.lastName %> (<%= feedback.sender.role %>)<br>
+              <strong>Message:</strong> <%= feedback.message %><br>
+              <strong>Status:</strong> <%= feedback.status %><br>
+              <small>Received on: <%= feedback.createdAt.toLocaleString() %></small>
+
+              <!-- Show replies to the feedback -->
+              <% if (feedback.replies && feedback.replies.length > 0) { %>
+                <h3 style="margin-top: 10px;">Replies:</h3>
+                <ul>
+                  <% feedback.replies.forEach(reply => { %>
+                    <li>
+                      <strong>Admin Response:</strong> <%= reply.reply %><br>
+                      <small>Replied on: <%= reply.repliedAt.toLocaleString() %></small>
+                    </li>
+                  <% }); %>
+                </ul>
+              <% } else { %>
+                <p>No responses yet.</p>
+              <% } %>
+
+              <!-- Show the reply form if the feedback hasn't been replied to (status is "pending" or "sent") -->
+              <% if (feedback.status === "pending" || feedback.status === "sent") { %>
+                <h3 style="margin-top: 10px;">Respond to this Feedback:</h3>
+                <form action="/admin/feedbacks" method="POST">
+                  <textarea name="replyMessage" rows="4" placeholder="Your response..." required></textarea><br>
+                  <input type="hidden" name="feedbackId" value="<%= feedback._id %>">
+                  <button type="submit">Send Response</button>
+                </form>
+              <% } else { %>
+                <p><strong>Status:</strong> Already replied</p>
+              <% } %>
+
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+    <% } %>
+
+  </body>
+  </html>
+</main>

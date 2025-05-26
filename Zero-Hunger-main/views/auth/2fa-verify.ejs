@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<div class="container" style="max-width: 500px; margin: 50px auto;">
+  <div class="card shadow p-4">
+    <h2 class="text-center mb-4"><%= title || "Two-Factor Authentication" %></h2>
+
+    <% if (messages && messages.error) { %>
+      <div class="alert alert-danger"><%= messages.error %></div>
+    <% } %>
+
+    <form action="/2fa/verify" method="POST">
+      <input type="hidden" name="userId" value="<%= userId %>" />
+      <div class="form-group mb-3">
+        <label for="token">Enter 6-digit code from your Authenticator app:</label>
+        <input
+          type="text"
+          id="token"
+          name="token"
+          required
+          placeholder="123456"
+          autocomplete="one-time-code"
+          pattern="\d{6}"
+          title="Enter the 6-digit code"
+          maxlength="6"
+          style="padding: 10px; width: 100%;"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary w-100" style="padding: 10px;">Verify</button>
+    </form>
+  </div>
+</div>

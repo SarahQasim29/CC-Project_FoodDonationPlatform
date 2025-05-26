@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Detail</title>
+</head>
+<body>
+  <h1>Feedback from <%= feedback.sender.firstName %> <%= feedback.sender.lastName %></h1>
+
+  <h2>Message</h2>
+  <p><%= feedback.message %></p>
+
+  <h2>Admin Reply</h2>
+  <% if (feedback.adminReply) { %>
+    <p><%= feedback.adminReply %></p>
+  <% } else { %>
+    <p>No reply yet.</p>
+  <% } %>
+
+  <h3>Reply to this feedback</h3>
+  <form action="/feedbacks/<%= feedback._id %>/reply" method="POST">
+    <textarea name="replyMessage" rows="5" required></textarea>
+    <button type="submit">Send Reply</button>
+  </form>
+
+  <br>
+  <a href="/feedbacks">Back to Feedback List</a>
+</body>
+</html>

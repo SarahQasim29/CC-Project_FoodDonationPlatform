@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Tracking</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    #map {
+      height: 80vh;
+      width: 100%;
+    }
+    select {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Agent Tracking</h1>
+
+  <label for="agentDropdown">Select Agent:</label>
+  <select id="agentDropdown">
+    <option value="">Select an agent</option>
+    <% agents.forEach(agent => { %>
+      <option value="<%= agent._id %>"><%= agent.firstName %> <%= agent.lastName %></option>
+    <% }); %>
+  </select>
+
+  <div id="agentsData" data-agents-location="<%= agentsLocation %>" data-donor-location="<%= donorLocation %>" data-collector-location="<%= collectorLocation %>"></div>
+
+  <div id="map"></div>
+
+  <script>
+    let map;
+    let agentMarker;
+    let currentAgentPath;
+    let intervalId;
+  
+    function initMap() {
+      map = L.map("map").setView([24.8607, 67.0011], 13);  // Centered on a default location
+  
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+  
+      agentMarker = L.marker([24.8607, 67.0011]).addTo(map);  // Initial agent location
+  
+      // Fetch donor and collector location from data attribute
+      const donorLocation = JSON.parse(document.getElementById('agentsData').dataset.donorLocation);
+      const collectorLocation = JSON.parse(document.getElementById('agentsData').dataset.collectorLocation);
+  
+      // Add markers for the donor and collector location
+      L.marker(donorLocation)
+        .addTo(map)
+        .bindPopup("Donor Location")
+        .openPopup();
+  
+      L.marker(collectorLocation)
+        .addTo(map)
+        .bindPopup("Collector Location")
+        .openPopup();
+    }
+  
+    function simulateMovement(agentPath, type, agentName) {
+      let currentIndex = 0;
+  
+      // Set the initial popup content for the agent marker
+      agentMarker.bindPopup(`${agentName} is moving`);
+  
+      intervalId = setInterval(() => {
+        if (currentIndex < agentPath.length) {
+          const location = agentPath[currentIndex];
+          agentMarker.setLatLng([location.latitude, location.longitude]);
+          map.setView([location.latitude, location.longitude]);  // Keep map centered on agent
+          currentIndex++;
+        } else {
+          clearInterval(intervalId);  // Stop once the agent reaches the destination
+          if (type === "donor") {
+            agentMarker.setPopupContent(`${agentName} has reached the donor!`);
+            agentMarker.openPopup();
+            // Now move towards the collector
+            const collectorPath = agentPath === currentAgentPath.donorPath ? currentAgentPath.collectorPath : currentAgentPath.donorPath;
+            simulateMovement(collectorPath, "collector", agentName);  // Pass the agentName to the next step
+          } else {
+            agentMarker.setPopupContent(`${agentName} has reached the collector, and the donation has been delivered.`);
+            agentMarker.openPopup();
+          }
+        }
+      }, 500);  // Update every 500ms
+    }
+  
+    function fetchAgentLocations(agentId, agentName) {
+      const agentsLocationData = document.getElementById('agentsData').dataset.agentsLocation;
+      const agentsLocation = JSON.parse(agentsLocationData);
+  
+      const agentPaths = agentsLocation[agentId];
+  
+      if (agentPaths) {
+        currentAgentPath = agentPaths;
+        simulateMovement(agentPaths.donorPath, "donor", agentName);  // Start the agent's movement towards the donor
+      } else {
+        alert("No location data available for this agent.");
+      }
+    }
+  
+    window.onload = () => {
+      initMap();
+  
+      const dropdown = document.getElementById("agentDropdown");
+      dropdown.addEventListener("change", (event) => {
+        if (intervalId) {
+          clearInterval(intervalId);  // Clear the previous movement if any
+        }
+        const selectedAgentId = event.target.value;
+        const agentName = dropdown.options[dropdown.selectedIndex].text;  // Get the full name of the agent
+        fetchAgentLocations(selectedAgentId, agentName);  // Fetch new agent locations and start movement
+      });
+    };
+  </script>
+  
+</body>
+</html>
+

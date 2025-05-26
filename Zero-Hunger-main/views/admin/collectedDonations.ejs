@@ -1,0 +1,34 @@
+<main>
+	<%- include('../partials/adminSidebar') %>
+<h1>Collected Donations</h1>
+
+<% if (collectedDonations.length > 0) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Donor</th>
+        <th>Food Type</th>
+        <th>Quantity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% collectedDonations.forEach(function(donation) { %>
+        <tr>
+          <td><%= donation.donor.firstName %></td>
+          <td><%= donation.foodType %></td>
+          <td><%= donation.quantity %></td>
+          <td>
+            <form action="/admin/donation/assign/<%= donation._id %>" method="GET">
+              
+              <button type="submit" class="btn btn-primary mt-2">Assign</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>No collected donations at the moment.</p>
+<% } %>
+</main>

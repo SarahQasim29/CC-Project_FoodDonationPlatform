@@ -1,0 +1,34 @@
+<main>
+    <%- include('../partials/collectorSidebar') %>
+<h1>Accepted Donations</h1>
+
+<% if (acceptedDonations.length > 0) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Donor</th>
+        <th>Food Type</th>
+        <th>Quantity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% acceptedDonations.forEach(function(donation) { %>
+        <tr>
+          <td><%= donation.donor.firstName %></td>
+          <td><%= donation.foodType %></td>
+          <td><%= donation.quantity %></td>
+          <td>
+            <form action="/collector/donation/collect/<%= donation._id %>" method="POST">
+              <input type="number" name="quantity" min="1" max="<%= donation.quantity %>" required>
+              <button type="submit">Collect</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>No available donations at the moment.</p>
+<% } %>
+</main>

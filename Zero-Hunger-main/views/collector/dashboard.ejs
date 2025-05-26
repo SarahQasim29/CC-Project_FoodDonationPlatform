@@ -1,0 +1,31 @@
+<main>
+    <%- include('../partials/collectorSidebar') %>
+
+    <div id="main-wrapper">
+
+        <div class="bg-white shadow-sm p-3">
+            <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+            <h5 class="m-0 color-theme d-inline-block">Collector Dashboard</h5>
+        </div>
+
+        <div class="d-flex gap-3 flex-wrap m-4 text-white">
+
+            <div class="bg-success rounded p-3" style="width: 250px;">
+                <div class="fs-1"><%= numAssignedDonations %></div>
+                <div class="fs-5">Donations assigned to you</div>
+            </div>
+
+            <div class="bg-primary rounded p-3" style="width: 250px;">
+                <div class="fs-1"><%= numCollectedDonations %></div>
+                <div class="fs-5">Donations collected</div>
+            </div>
+
+            <div class="bg-danger rounded p-3" style="width: 250px;">
+                <div class="fs-1"><%= numPendingCollections %></div> <!-- Display the number of pending donations -->
+                <div class="fs-5">Pending collections</div>
+              </div>
+
+        </div>
+
+    </div>
+</main>

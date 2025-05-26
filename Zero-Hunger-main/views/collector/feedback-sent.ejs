@@ -1,0 +1,38 @@
+<main>
+  <%- include('../partials/collectorSidebar') %>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <header>
+    <h1>Feedback</h1>
+    <a href="/collector/dashboard">Back to Dashboard</a>
+  </header>
+  <main>
+    <section id="feedback-sent">
+        <h2>My Sent Feedback</h2>
+        
+        <% if (sentFeedbacks.length === 0) { %>
+          <p>You have not sent any feedback yet.</p>
+        <% } else { %>
+          <ul>
+            <% sentFeedbacks.forEach(feedback => { %>
+              <li>
+                <strong>To:</strong> <%= feedback.receiver.firstName %> <%= feedback.receiver.lastName %> (<%= feedback.receiver.role %>)<br>
+                <strong>Message:</strong> <%= feedback.message %><br>
+                <strong>Sent on:</strong> <%= feedback.createdAt.toDateString() %>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
+      </section>
+      
+  </main>
+</body>
+</html>
+</main>
