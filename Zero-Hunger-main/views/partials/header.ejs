@@ -61,7 +61,9 @@
                     <li class="nav-item"><a class="nav-link text-white" href="/home/about-us">About us</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="/home/mission">Our mission</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="/home/contact-us">Contact us</a></li>
-                    <% if (currentUser) { %>
+                    <li class="nav-item"><a class="nav-link text-white" href="/home/developers">Developers</a></li>
+
+					<% if (currentUser) { %>
                         <li class="nav-item user-icon text-white"><%= currentUser.firstName[0] %></li>
                     <% } else { %>
                         <li class="nav-item"><a class="nav-link text-white" href="/auth/login">Login</a></li>

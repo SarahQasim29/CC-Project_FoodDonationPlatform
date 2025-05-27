@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Developers</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0d1117;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .developer-card {
+      background: #161b22;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 255, 150, 0.2);
+      padding: 20px;
+      margin: 15px 0;
+      transition: transform 0.3s ease;
+    }
+    .developer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(0, 255, 150, 0.5);
+    }
+    .role {
+      color: #00ff99;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="text-center mb-4">🚀 Meet the Developers</h1>
+    <div class="row justify-content-center">
+      <% const developers = [
+        { name: 'Sarah Qasim', role: 'Full Stack Developer' },
+        { name: 'Hajra Imran', role: 'Backend Developer' },
+        { name: 'Humna Ahmed', role: 'Frontend Developer' },
+        { name: 'Mahnoor Muzaffar', role: 'Frontend Developer' }
+      ]; %>
+
+      <% developers.forEach(dev => { %>
+        <div class="col-md-4">
+          <div class="developer-card text-center">
+            <h4><%= dev.name %></h4>
+            <p class="role"><%= dev.role %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+</html>

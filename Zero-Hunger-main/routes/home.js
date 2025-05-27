@@ -17,5 +17,8 @@ router.get("/home/contact-us", (req,res) => {
 	res.render("home/contactUs", { title: "Contact us | Food Aid" });
 });
 
+router.get("/home/developers", (req,res) => {
+	res.render("home/developers", { title: "Developers | Food Aid" });
+});
 
 module.exports = router;
