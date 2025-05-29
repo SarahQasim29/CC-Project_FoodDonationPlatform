@@ -112,13 +112,32 @@ router.post("/auth/login", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/auth/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) return next(err);
-    req.session.destroy();
-    req.flash("success", "Logged out successfully");
-    res.redirect("/");
-  });
+router.get("/auth/logout", async (req, res, next) => {
+  console.log("✅ Logout route hit");
+
+  try {
+    if (req.logout) {
+      await req.logout();
+      console.log("✅ Logout done");
+    } else {
+      console.warn("⚠️ req.logout is not defined");
+    }
+
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("❌ Session destroy error:", err);
+        return next(err);
+      }
+
+      console.log("✅ Session destroyed");
+      res.clearCookie("connect.sid");
+      console.log("✅ Cookie cleared");
+      res.redirect("/");
+    });
+  } catch (err) {
+    console.error("❌ Logout error:", err);
+    next(err);
+  }
 });
 
 //
