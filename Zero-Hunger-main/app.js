@@ -46,10 +46,11 @@ app.use(methodOverride("_method"));
 // Session middleware (must come before passport.session)
 app.use(
   session({
+    name: "connect.sid",
     secret: "secret", // Change this to a strong secret in production!
     resave: false, // Don't save session if unmodified
     saveUninitialized: false, // Don't create session until something stored
-    cookie: { maxAge: 3600000, httpOnly: true }, // 1 hour
+    cookie: { maxAge: 3600000, secure: false, httpOnly: true }, // 1 hour
   })
 );
 

@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  zero-hunger-app:
+    build: .
+    container_name: food-donation-project
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
